@@ -1,0 +1,65 @@
+// To parse this JSON data, do
+//
+//     final experts = expertsFromJson(jsonString);
+
+import 'dart:convert';
+
+List<Experts> expertsFromJson(String str) => List<Experts>.from(json.decode(str).map((x) => Experts.fromJson(x)));
+
+String expertsToJson(List<Experts> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class Experts {
+  Experts({
+  required  this.id,
+  required  this.name,
+  required  this.email,
+  required  this.password,
+  required  this.dateOfBirth,
+  required  this.gender,
+  required  this.details,
+  required  this.image,
+  required  this.createdAt,
+  required  this.updatedAt,
+  required  this.deletedAt,
+  });
+
+  int id;
+  String name;
+  String email;
+  String password;
+  DateTime dateOfBirth;
+  int gender;
+  dynamic details;
+  String image;
+  DateTime createdAt;
+  DateTime updatedAt;
+  dynamic deletedAt;
+
+  factory Experts.fromJson(Map<String, dynamic> json) => Experts(
+    id: json["id"],
+    name: json["name"],
+    email: json["email"],
+    password: json["password"],
+    dateOfBirth: DateTime.parse(json["date_of_birth"]),
+    gender: json["gender"],
+    details: json["details"],
+    image: json["image"] == null ? null : json["image"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+    deletedAt: json["deleted_at"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "email": email,
+    "password": password,
+    "date_of_birth": "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}",
+    "gender": gender,
+    "details": details,
+    "image": image == null ? null : image,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+    "deleted_at": deletedAt,
+  };
+}
